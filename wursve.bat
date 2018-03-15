@@ -1,6 +1,6 @@
 @echo off
-@title WURSVE v4
-echo Windows Update Reset Script Vista Edition v5 - (c) henryolik 2018 - https://wur.ministudios.ml
+@title WURSVE v5
+echo Windows Update Reset Script Vista Edition v5 - (c) henryolik 2018 - https://wur.henryolik.ga
 :check_Permissions
 
     net session >nul 2>&1
