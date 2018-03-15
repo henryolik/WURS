@@ -1,6 +1,6 @@
 @echo off
 @title WURS v4
-echo Windows Update Reset Script v4 - (c) henryolik 2018 - https://wur.ministudios.ml
+echo Windows Update Reset Script v5 - (c) henryolik 2018 - https://wur.ministudios.ml
 :check_Permissions
 
     net session >nul 2>&1
@@ -41,6 +41,9 @@ SET dtStamp24=%date:~-4%%date:~4,2%%date:~7,2%_%time:~0,2%%time:~3,2%%time:~6,2%
 if "%HOUR:~0,1%" == " " (SET dtStamp=%dtStamp9%) else (SET dtStamp=%dtStamp24%)
 Set logtimestamp=%dtStamp%
 :continue
+echo CLEARING PREVIOUSLY CREATED BAK FOLDERS
+rd /S /Q %systemroot%\SoftwareDistribution.bak
+rd /S /Q %systemroot%\system32\catroot2.bak
 cd %SystemRoot%\System32
 echo DO YOU WANT TO BACKUP YOUR SYSTEM? (RECOMMENDED)
 set INPUT=
