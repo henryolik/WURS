@@ -1,6 +1,6 @@
 @echo off
-@title WURSVE v5
-echo Windows Update Reset Script Vista Edition v5 - (c) henryolik 2018 - https://wur.henryolik.ga
+@title WURSVE v6
+echo Windows Update Reset Script Vista Edition v6 - (c) henryolik 2018 - https://henryolik.eu
 :check_Permissions
 
     net session >nul 2>&1
@@ -45,12 +45,14 @@ echo CLEARING PREVIOUSLY CREATED BAK FOLDERS
 rd /S /Q %systemroot%\SoftwareDistribution.bak
 rd /S /Q %systemroot%\system32\catroot2.bak
 cd %SystemRoot%\System32
+:backup
 echo DO YOU WANT TO BACKUP YOUR SYSTEM? (RECOMMENDED)
 set INPUT=
 set /P INPUT=Y/N: %=%
 If /I "%INPUT%"=="y" goto yes 
 If /I "%INPUT%"=="n" goto next
-echo Incorrect input & goto Ask
+echo Incorrect input
+goto backup
 :yes
 echo BACKING UP REGISTRY...
 mkdir "C:/regbak"
@@ -128,6 +130,8 @@ regsvr32.exe /s muweb.dll
 regsvr32.exe /s wuwebv.dll
 echo RESETTING WINSOCK...
 netsh winsock reset
+echo RESETTING PROXY...
+netsh winhttp reset proxy
 echo STARTING BITS SERVICE...
 net start bits
 echo STARTING WU SERVICE...
@@ -138,5 +142,17 @@ echo STARTING CRYPTO SERVICE...
 net start cryptsvc
 echo CLEARING BITS QUEUE
 bitsadmin.exe /reset /allusers
+:rebootq
+echo DO YOU WANT TO RESTART YOUR COMPUTER? (RECOMMENDED)
+set INPUT=
+set /P INPUT=Y/N: %=%
+If /I "%INPUT%"=="y" goto reboot
+If /I "%INPUT%"=="n" goto exit
+echo Incorrect input 
+goto rebootq
+:reboot
+echo RESTARTING YOUR COMPUTER...
+shutdown /r
+:exit
 echo DONE!
 pause
